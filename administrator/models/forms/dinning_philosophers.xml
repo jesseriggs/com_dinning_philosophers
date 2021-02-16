@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+<form
+	addrulepath="/administrator/components/com_dinning_philosophers/models/rules"
+>
+	<fieldset
+		name="details"
+		label="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_DETAILS"
+	>
+		<field
+			name="id"
+			type="text"
+			class="readonly"
+			readonly="true"
+			label="JGLOBAL_FIELD_ID_LABEL"
+			description ="JGLOBAL_FIELD_ID_DESC"
+			/>
+		<field
+			name="title"
+			type="text"
+			label="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_TITLE_LABEL"
+			description="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_TITLE_DESC"
+			hint="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_TITLE_DESC"
+			size="40"
+			/>
+		<field
+			name="alias"
+			type="text"
+			label="JFIELD_ALIAS_LABEL"
+			description="JFIELD_ALIAS_DESC"
+			hint="JFIELD_ALIAS_DESC"
+			size="40"
+			/>
+		<field
+			name="catid"
+			type="category"
+			class="inputbox"
+			extension="com_dinning_philosophers"
+			label="JCATEGORY"
+			description="JFIELD_CATEGORY_DESC"
+			require="true"
+			>
+			<option value="0">JOPTION_SELECT_CATEGORY</option>
+			</field>
+		<field
+			name="created_by_alias"
+			type="text"
+			label="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_AUTHOR_ALIAS"
+			description="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_AUTHOR_ALIAS_DESC"
+			size="255"
+			/>
+		<field
+			name="metadesc"
+			type="textarea"
+			rows="3"
+			cols="30"
+			label="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_DESCRIPTION"
+			description="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_DESCRIPTION_DESC"
+			size="255"
+			/>
+		</fieldset>
+	<fields name="imageinfo">
+		<fieldset
+			name="image-info"
+			label="COM_DINNING_PHILOSOPHERS_IMAGE_FIELDS"
+			>
+			<field
+				name="image"
+				type="media"
+				preview="tooltip"
+				label="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_IMAGE_LABEL"
+				description="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_IMAGE_DESC"
+				size="30"/>
+			<field
+				name="alt"
+				type="text"
+				label="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_ALT_LABEL"
+				description="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_ALT_DESC"
+				size="30"/>
+			<field
+				name="caption"
+				type="text"
+				label="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_CAPTION_LABEL"
+				description="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_CAPTION_DESC"
+				size="30"/>
+			<field
+				name="height"
+				type="text"
+				label="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_HEIGHT"
+				description="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_HEIGHT_DESC"
+				size="7"/>
+			<field
+				name="width"
+				type="text"
+				label="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_WIDTH"
+				description="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_WIDTH_DESC"
+				size="7"/>
+		</fieldset>
+	</fields>
+	<fields name="params">
+		<fieldset
+			name="params"
+			label="JGLOBAL_FIELDSET_DISPLAY_OPTIONS"
+			>
+			<field
+				name="show_catagory"
+				type="list"
+				label="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_SHOW_CATEGORY_LABEL"
+				description="COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_FIELD_SHOW_CATEGORY_DESC"
+				default=""
+				>
+				<option value="">JGLOBAL_USE_GLOBAL</option>
+				<option value="0">JHIDE</option>
+				<option value="1">JSHOW</option>
+			</field>
+		</fieldset>
+	</fields>
+</form>

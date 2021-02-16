@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+<extension type="component" version="3" method="upgrade">
+	<name>Dinning_philosophers</name>
+	<creationDate>2021 02 05</creationDate>
+	<author>Jesse Riggs</author>
+	<authorEmail>jesseriggs@jesse-riggs.com</authorEmail>
+	<authorUrl>www.jesse-riggs.com</authorUrl>
+	<copyright>2021 Jesse Riggs</copyright>
+	<license>GNU General Public License version 2 or later;	
+			see LICENSE.txt</license>
+	<version>0.0.1</version>
+	<description>Dinning_philosophers View</description>
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8"
+				>sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8"
+				>sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+	<update>
+		<schemas>
+			<schemapath type="mysql"
+				>sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
+	<files folder="site">
+		<filename>dinning_philosophers.php</filename>
+		<filename>controller.php</filename>
+		<filename>index.html</filename>
+		<filename>router.php</filename>
+		<folder>controllers</folder>
+		<folder>helpers</folder>
+		<folder>language</folder>
+		<folder>models</folder>
+		<folder>views</folder>
+	</files>
+	<languages folder="site/language">
+		<language tag="en-GB"
+			>en-GB/en-GB.com_dinning_philosophers.ini</language>
+		<language tag="en-US"
+			>en-US/en-US.com_dinning_philosophers.ini</language>
+		<language tag="zh-CN"
+			>zh-CN/zh-CN.com_dinning_philosophers.ini</language>
+	</languages>
+	<media destination="com_dinning_philosophers" folder="media">
+		<folder>js</folder>
+	</media>
+	<administration>
+		<menu link='index.php?option=com_dinning_philosophers'
+			>COM_DINNING_PHILOSOPHERS_MENU</menu>
+		<files folder="administrator">
+			<filename>access.xml</filename>
+			<filename>dinning_philosophers.php</filename>
+			<filename>config.xml</filename>
+			<filename>controller.php</filename>	
+			<filename>index.html</filename>
+			<folder>controllers</folder>
+			<folder>helpers</folder>
+			<folder>language</folder>
+			<folder>models</folder>
+			<folder>sql</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+		</files>
+		<languages folder="administrator/language">
+			<language tag="en-US"
+				>en-US/en-US.com_dinning_philosophers.ini</language>
+			<language tag="en-US"
+				>en-US/en-US.com_dinning_philosophers.sys.ini</language>
+			<language tag="en-GB"
+				>en-GB/en-GB.com_dinning_philosophers.ini</language>
+			<language tag="en-GB"
+				>en-GB/en-GB.com_dinning_philosophers.sys.ini</language>
+		</languages>
+	</administration>
+</extension>

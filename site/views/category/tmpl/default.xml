@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+<metadata>
+	<layout title="COM_DINNING_PHILOSOPHERS_CATEGORY_VIEW_TITLE">
+		<message>
+			<![CDATA[COM_DINNING_PHILOSOPHERS_CATEGORY_VIEW_DESC]]>
+		</message>
+	</layout>
+
+	<fields name="request">
+		<fieldset name="request"
+			addfieldpath=
+			"/administrator/components/com_dinning_philosophers/models/fields"
+			>
+			<field
+				name="id"
+				type="category"
+				label="JGLOBAL_CHOOSE_CATEGORY_LABEL"
+				description="JGLOBAL_CHOOSE_CATEGORY_DESC"
+				extension="com_dinning_philosophers"
+				/>
+		</fieldset>
+	</fields>
+</metadata>
