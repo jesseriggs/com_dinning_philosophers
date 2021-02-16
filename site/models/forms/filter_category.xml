@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+<form>
+	<fields name="list">
+		<field
+			name="fullordering"
+			type="list"
+			onchange="this.form.submit();"
+			default="alias ASC"
+			>
+			<option value="">COM_DINNING_PHILOSOPHERS_SORT_BY</option>
+			<option value="id ASC">COM_DINNING_PHILOSOPHERS_ID_ASC</option>
+			<option value="id DESC">COM_DINNING_PHILOSOPHERS_ID_DESC</option>
+			<option value="alias ASC">COM_DINNING_PHILOSOPHERS_ALIAS_ASC</option>
+			<option value="alias DESC">COM_DINNING_PHILOSOPHERS_ALIAS_DESC</option>
+		</field>
+		<field
+			name="limit"
+			type="limitbox"
+			class="input-mini"
+			default="10"
+			onchange="this.form.submit();"
+			/>
+	</fields>
+</form>
