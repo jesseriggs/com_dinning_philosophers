@@ -7,23 +7,52 @@
  * @license   GNU General Public License version 2 or later;see LICENSE.txt
  */
 
-function dinning_philosophersDemo(evt, input) {
-
-	var dinning_philosophersElement =
-		document.getElementById("dinning-philosophers-element");
-	dinning_philosophersElement.style.backgroundColor = "black";
-
-}
-
-// first we need to create a stage
-var stage = new Konva.Stage({
-	container : 'dinning-philosophers-element',   // id of container <div>
-	width     : 1265,
-	height    : 720
+document.addEventListener( 'DOMContentLoaded', function(){
+	init();
 });
 
-// then create layer
-var layer = new Konva.Layer();
+const STAGEWIDTH    = 1270;
+const STAGEHEIGHT   = 720;
+const CONTAINERNAME = 'dinning-philosophers-container';
+const FULLSCREENCON = 'full-screen-container';
+
+function dinning_philosophersDemo(evt, input)
+{
+	var dinning_philosophersElement =
+		document.getElementById( CONTAINERNAME );
+	dinning_philosophersElement.style.backgroundColor = 'black';
+}
+
+function fitCanvas()
+{
+	var container = document.getElementById( CONTAINERNAME );
+	var width     = container.offsetWidth;
+	var scale     = width / STAGEWIDTH;
+
+	stage.width( STAGEWIDTH * scale );
+	stage.height( STAGEHEIGHT * scale );
+	stage.scale( { x : scale, y : scale } );
+
+	stage.draw();
+}
+
+function fullScreen()
+{
+	if( document.fullscreenElement ) {
+		document.exitFullscreen();
+		return;
+	}
+
+	var container = document.getElementById( FULLSCREENCON );
+	if( container.requestFullscreen )
+		container.requestFullscreen();
+	else if ( container.mozRequestFullScreen )
+		container.mozRequestFullScreen();
+	else if ( container.webkitRequestFullscreen )
+		container.webkitRequestFullscreen ();
+	else if ( container.msRequestFullScreen )
+		container.msRequestFullScreen();
+}
 
 const pName = [
 	'void',
@@ -187,8 +216,15 @@ function makeText( x, y, str, id )
 	});
 }
 
-var sn=0;
-function runNextCommand()
+function runNextCommand( solution = false )
+{
+	if( solution )
+		runNextCommandSolution();
+	else
+		runNextCommandDeadlock();
+}
+
+function runNextCommandSolution()
 {
     switch( sn )
     {
@@ -336,6 +372,51 @@ function runNextCommand()
     }
 }
 
+function runNextCommandDeadlock()
+{
+    switch( sn )
+    {
+        case 0:
+            ph1.wait( ph1.getLeft() );
+            ph1.run();
+	    sn++;
+	    break;
+	case 1:
+	    ph1.stop();
+            ph2.wait( ph2.getLeft() );
+	    ph2.run();
+	    sn++;
+	    break;
+	case 2:
+	    ph2.stop();
+            ph3.wait( ph3.getLeft() );
+	    ph3.run();
+	    sn++;
+	    break;
+	case 3:
+	    ph3.stop();
+	    ph1.run();
+	    sn++;
+	    break;
+	case 4:
+	    ph1.sleep();
+	    ph2.run();
+	    sn++;
+	    break;
+	case 5:
+	    ph2.sleep();
+	    ph3.run();
+	    sn++;
+	    break;
+	case 6:
+	    ph3.sleep( true );
+	    sn++;
+	    break;
+	default :
+	    break;
+    }
+}
+
 //
 // Code boxes
 //
@@ -442,7 +523,7 @@ class CodeBox
 
 	makeBold( ln, colorH = COLORS.textH )
 	{
-		for( let i = 1; i <= 12; i++ ){
+		for( let i = 1; i <= this.code.length; i++ ){
 			let ltxt = this.code[ i - 1 ];
 			ltxt.strokeWidth( 0.7 );
 			if( i != ln ){
@@ -467,6 +548,28 @@ class CodeBox
 		this.status.text( "STATUS=" + s );
 	}
 
+}
+
+const DeadlockCode = [
+	"1. void after_thinking( philosopher *p ) {" ,
+	"2.  sem_wait( chopstick( left( p ) ) );" ,
+	"3.  sem_wait( chopstick( right( p ) ) );" ,
+	"4.  eat( p );",
+	"5.  sem_post( chopstick( right( p ) ) );" ,
+	"6.  sem_post( chopstick( left( p ) ) );" ,
+	"7. } "
+];
+class DeadlockCodeBox extends CodeBox
+{
+	constructor( id )
+	{
+		var width  = 400;
+		var height = 280;
+		var x      = id * 20 + ( id - 1 ) * width;
+		var y      = 60;
+
+		super( x, y, width, height, id, DeadlockCode );
+	}
 }
 
 const SolutionCode = [
@@ -496,31 +599,6 @@ class SolutionCodeBox extends CodeBox
 	}
 }
 
-//
-// spaghetti
-//
-noodles = new Konva.Circle({
-	radius: 60,
-	fill: COLORS.noodles,
-	x: 600,
-	y: 550,
-	stroke: COLORS.text,
-	strokeWidth: 5,
-	shadowColor: COLORS.conBG,
-	shadowBlur: 2,
-	shadowOffsetX: 1,
-	shadowOffsetY: 1,
-});
-layer.add( noodles );
-
-marinara = new Konva.Circle({
-	radius: 30,
-	fill: COLORS.marinara,
-	x: 600,
-	y: 550,
-});
-layer.add( marinara );
-
 function meatball( x, y )
 {
 	var m = new Konva.Circle({
@@ -537,10 +615,6 @@ function meatball( x, y )
 
 	return m;
 }
-meatball( 570, 550 );
-meatball( 630, 550 );
-meatball( 600, 580 );
-meatball( 600, 520 );
 
 //
 // chopsticks
@@ -576,9 +650,6 @@ function chopstick( x, y, id, rotation)
 
 	return s;
 }
-chopstick( 600, 550, 1,  120 );
-chopstick( 600, 550, 2, -120 );
-chopstick( 600, 550, 3,    0 );
 
 //
 // old farts
@@ -668,18 +739,113 @@ class SolutionPhilosopher extends Philosopher
 			this.finishEating();
 	}
 }
-var ph1 = new SolutionPhilosopher( 1 );
-var ph2 = new SolutionPhilosopher( 2 );
-var ph3 = new SolutionPhilosopher( 3 );
 
-// add the layer to the stage
-stage.add(layer);
+class DeadlockPhilosopher extends Philosopher
+{
+	constructor( id )
+	{
+		var cb = new DeadlockCodeBox( id );
+		var av = new Avatar( id );
+		super( id, cb, av );
+	}
+}
 
-ph1.stop();
-ph2.stop();
-ph3.stop();
+var stage = null;
+var layer = null;
+var sn    = null;
+var ph1   = null;
+var ph2   = null;
+var ph3   = null;
 
-// Draw image
-layer.draw();
+function init()
+{
+	var solution = false;
+
+	// set the stage for dinning
+	setStage( solution );
+	window.addEventListener( 'resize', fitCanvas );
+
+	// Now, add functionality to buttons
+	document.getElementById( "com-dinning-philosophers-fullscreen" )
+		.onclick = fullScreen;
+	document.getElementById( "com-dinning-philosophers-step" )
+		.onclick = function(){ runNextCommand( solution ) };
+	document.getElementById( "com-dinning-philosophers-algo" )
+		.onclick = function(){
+			solution = !solution;
+			setStage( solution );
+		};
+}
+
+function setStage( solution = false )
+{
+	// first we need to create a stage
+	stage = new Konva.Stage({
+		container : CONTAINERNAME,
+		width     : STAGEWIDTH,
+		height    : STAGEHEIGHT
+	});
+
+	// then create layer
+	layer = new Konva.Layer();
+
+	sn=0;
+
+	//
+	// spaghetti
+	//
+	noodles = new Konva.Circle({
+		radius        : 60,
+		fill          : COLORS.noodles,
+		x             : 600,
+		y             : 550,
+		stroke        : COLORS.text,
+		strokeWidth   : 5,
+		shadowColor   : COLORS.conBG,
+		shadowBlur    : 2,
+		shadowOffsetX : 1,
+		shadowOffsetY : 1,
+	});
+	layer.add( noodles );
+
+	marinara = new Konva.Circle({
+		radius : 30,
+		fill   : COLORS.marinara,
+		x      : 600,
+		y      : 550,
+	});
+	layer.add( marinara );
+
+	meatball( 570, 550 );
+	meatball( 630, 550 );
+	meatball( 600, 580 );
+	meatball( 600, 520 );
+
+	chopstick( 600, 550, 1,  120 );
+	chopstick( 600, 550, 2, -120 );
+	chopstick( 600, 550, 3,    0 );
+
+	if( solution ){
+		ph1 = new SolutionPhilosopher( 1 );
+		ph2 = new SolutionPhilosopher( 2 );
+		ph3 = new SolutionPhilosopher( 3 );
+	} else {
+		ph1 = new DeadlockPhilosopher( 1 );
+		ph2 = new DeadlockPhilosopher( 2 );
+		ph3 = new DeadlockPhilosopher( 3 );
+	}
+
+	// add the layer to the stage
+	stage.add(layer);
+
+	ph1.stop();
+	ph2.stop();
+	ph3.stop();
+
+	// Draw image
+	layer.draw();
+
+	fitCanvas();
+}
 
 /* vim: set tabstop=4 */

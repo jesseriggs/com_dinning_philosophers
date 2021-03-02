@@ -7,7 +7,7 @@
 	<authorEmail>jesseriggs@jesse-riggs.com</authorEmail>
 	<authorUrl>www.jesse-riggs.com</authorUrl>
 	<copyright>2021 Jesse Riggs</copyright>
-	<license>GNU General Public License version 2 or later;	
+	<license>GNU General Public License version 2 or later;
 			see LICENSE.txt</license>
 	<version>0.0.1</version>
 	<description>Dinning_philosophers View</description>
@@ -58,7 +58,7 @@
 			<filename>access.xml</filename>
 			<filename>dinning_philosophers.php</filename>
 			<filename>config.xml</filename>
-			<filename>controller.php</filename>	
+			<filename>controller.php</filename>
 			<filename>index.html</filename>
 			<folder>controllers</folder>
 			<folder>helpers</folder>

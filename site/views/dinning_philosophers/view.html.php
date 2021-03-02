@@ -17,20 +17,20 @@ class Dinning_philosophersViewDinning_philosophers extends HtmlView
 {
 
     protected $item;
-    
+
     protected $params;
-    
+
     protected $state;
-    
+
     public function display($tpl = null){
         $author = 'administrator';
         $description = '';
-        
+
         $this->item  = $this->get('Item');
         $this->state = $this->get('State');
-        
+
         $this->params = $this->state->get('params');
-        
+
         if(!isset($app)){
             $app = Factory::getApplication();
         }
@@ -41,15 +41,17 @@ class Dinning_philosophersViewDinning_philosophers extends HtmlView
             {
                 $author = $item->created_by_alias ?: $author;
             }
-            
+
             if(isset($item->metadesc))
             {
                 $description = $item->metadesc;
             }
         }
-        
+
         $this->document->setDescription($description);
         $this->document->setMetaData('author', $author, 'name');
+        $this->document->addScript(Uri::root(true).
+            "/media/com_dinning_philosophers/js/konva.js");
         $this->document->addScript(Uri::root(true).
             "/media/com_dinning_philosophers/js/dinning_philosophers.js");
         parent::display($tpl);

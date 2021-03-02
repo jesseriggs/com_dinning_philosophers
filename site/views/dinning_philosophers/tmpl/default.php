@@ -25,12 +25,24 @@ $description = $this->item->metadesc;
 	<dl class="article-info">
 	 <dt class="article-info-term">—<?php echo $description; ?></dt>
 		<dd class="createdby"><?php
-			echo Text::_('COM_DINNING_PHILOSOPHERS_BY'); 
+			echo Text::_('COM_DINNING_PHILOSOPHERS_BY');
 			echo $author; ?></dd>
 	</dl>
-	<div id="dinning_philosophers-element">
-	<p><?php echo Text::_('COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_DESC'); ?></p>	
-	<button onclick="dinning_philosophersDemo(event, 'text')"><?php echo Text::_("COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_BUTTON_TEXT");?></button>
+	<div id="dinning_philosophers-element" style="max-width:100vw;">
+		<p><?php echo Text::_('COM_DINNING_PHILOSOPHERS_DINNING_PHILOSOPHERS_DESC'); ?></p>
+		<div id="full-screen-container" class="cover" style="margin-right:15px;">
+			<div id="dinning-philosophers-container">
+				<!-- Put the Konva here --></div>
+			<span style="display:flex;position:relative;bottom:30px;">
+				<button id="com-dinning-philosophers-step"
+					>&#8631;</button>
+				<button id="com-dinning-philosophers-algo"
+					>&#x2699;</button>
+				<button style="right:0;position:absolute;"
+					id="com-dinning-philosophers-fullscreen"
+					>&#x26F6;</button>
+			</span>
+		</div>
 	</div>
 </div>
 <!-- End Dinning_philosophers -->
